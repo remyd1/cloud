@@ -305,11 +305,20 @@ class VBwrapper:
             medium = self.VM["iso_path"]
         else:
             medium = "%s.vdi" % name
+        try:
+            medium = medium.encode("ascii")
+            #medium = unicode(medium, "ascii")
+        except UnicodeError:
+            medium = medium.encode("utf-8")
+            #medium = unicode(medium, "utf-8")
+        else:
+            # value was valid ASCII data
+            pass
         template = "%s storageattach %s" % (self.cmd, name) \
                 + " --storagectl %s" % ctl["name"] \
                 + " --port %s --device %s" % (ctl["port"], ctl["device"]) \
                 + " --type %s" % ctl["attr"] \
-                + " --medium \"%s\"" % medium
+                + " --medium %s" % medium
         self.logger.info(template)
         os.system(template)
 
