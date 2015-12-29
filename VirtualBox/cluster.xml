@@ -1,0 +1,26 @@
+<vbc version="0.1">
+    <vm name="x" private="local-x">
+        <iso os="Linux_64" path="/home/rem/Téléchargements/area51_base_bio_fingerprint_ganglia_hpc_htcondor_java_kernel_kvm_os_perfSONAR_perl_python_sge_web-server_zfs-linux-6.2.x86_64.disk1.iso"/>
+	    <shared name="data1" path="/home/rem/Documents"/>
+	    <shared name="data2" path="/home/rem/Bureau"/>
+	    <enable cpuhotplug="on" />
+    </vm>
+    <frontend cpus="1">
+        <memory base="1000" vram="32" />
+	    <boot order="dvd disk none none" />
+	    <private nic="intnet" nictype="82540EM" nicname="default"/>
+	    <public nic="nat" nictype="82540EM" />
+	    <hd  size="30000" variant="Standard"/>
+	    <syssetting mouse="usbtablet" audio="none"/>
+	    <storage name="SATA" type="sata" controller="IntelAhci" attr="hdd" port="0" device="0"/>
+	    <storage name="IDE" type="ide" controller="PIIX4" attr="dvddrive" port="0" device="0"/>
+    </frontend>
+    <compute cpus="1" count="2">
+        <memory base="512" vram="32" />
+	    <boot order="net disk none none" />
+	    <private nic="intnet" nictype="82540EM" nicname="default"/>
+	    <hd  size="25000" variant="Standard"/>
+	    <syssetting audio="none"/>
+	    <storage name="SATA" type="sata" controller="IntelAhci" attr="hdd" port="0" device="0"/>
+     </compute>
+</vbc>
