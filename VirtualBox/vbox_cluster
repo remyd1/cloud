@@ -23,7 +23,7 @@ class VBwrapper:
 
     def parseArgs(self):
         """parse command line arguments """
-        self.errors = { "errType":"Need to provide type. Valid types: frontend or compute",
+        self.errors = {"errType":"Need to provide type. Valid types: frontend or compute",
                         "errNoConfig":"Need to provide xml configuration file.",
                         "errConfig":"Configuration file %s is not found"}
         usage = "Usage: %prog [-h] [-d] --type=[frontend|compute] configFile"
@@ -104,7 +104,7 @@ class VBwrapper:
         self.VM = {}
         # VM and network names
         xmlnode = xmlroot.findall("./vm")[0]
-        self.VM["vm_name"]= xmlnode.attrib["name"]
+        self.VM["vm_name"] = xmlnode.attrib["name"]
         self.VM["vm_network"] = xmlnode.attrib["private"]
 
         # iso info
@@ -174,7 +174,7 @@ class VBwrapper:
         str = xmlnode.attrib["order"]
         items = str.split()
         boot_order = ""
-        for n in range(0,len(items)):
+        for n in range(0, len(items)):
             boot_order += "--boot%d %s " % (n+1, items[n])
         self.VM["boot_order"] = boot_order
 
@@ -325,7 +325,7 @@ class VBwrapper:
     def commandSharedFolder(self, name):
         """create and run sharedfolder command"""
         num_shared = len(self.VM["shared"])
-        for i in range (0, num_shared):
+        for i in range(0, num_shared):
             shared = self.VM["shared"][i]
             template = "%s sharedfolder add %s" % (self.cmd, name) \
                 + " --name %s --hostpath %s --automount" % (shared["shared_name"], shared["shared_path"])
@@ -361,11 +361,12 @@ class VBwrapper:
     def rename_iso(self):
         iso_path = self.VM["iso_path"]
         #replace '+' by '_'
-        new_iso_path = iso_path.replace("+","_")
+        self.logger.info("Replacing '+' symbols in ISO name '%s' with '_'" % (iso_path))
+        new_iso_path = iso_path.replace("+", "_")
         os.rename(iso_path, new_iso_path)
         self.VM["iso_path"] = new_iso_path
 
 
 if __name__ == "__main__":
-    app=VBwrapper(sys.argv)
+    app = VBwrapper(sys.argv)
     app.run()
